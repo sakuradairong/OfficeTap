@@ -21,6 +21,8 @@ namespace OfficeTap
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+            _taskPaneControl?.RestoreAllWorkbookWindows();
+
             UnwireWorkbookEvents();
 
             if (_customTaskPane != null)
@@ -35,7 +37,7 @@ namespace OfficeTap
 
         private void WireWorkbookEvents()
         {
-            Application.NewWorkbook += Application_NewWorkbook;
+            ((Excel.AppEvents_Event)Application).NewWorkbook += Application_NewWorkbook;
             Application.WorkbookNewSheet += Application_WorkbookNewSheet;
             Application.WorkbookOpen += Application_WorkbookOpen;
             Application.WorkbookBeforeClose += Application_WorkbookBeforeClose;
@@ -44,7 +46,7 @@ namespace OfficeTap
 
         private void UnwireWorkbookEvents()
         {
-            Application.NewWorkbook -= Application_NewWorkbook;
+            ((Excel.AppEvents_Event)Application).NewWorkbook -= Application_NewWorkbook;
             Application.WorkbookNewSheet -= Application_WorkbookNewSheet;
             Application.WorkbookOpen -= Application_WorkbookOpen;
             Application.WorkbookBeforeClose -= Application_WorkbookBeforeClose;

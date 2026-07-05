@@ -21,6 +21,7 @@ namespace OfficeTap
                 }
 
                 _toolTip?.Dispose();
+                _tabContextMenu.Dispose();
                 _regularTabFont?.Dispose();
                 _activeTabFont?.Dispose();
             }
