@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 
 [assembly: AssemblyTitle("OfficeTap")]
 [assembly: AssemblyDescription("Excel VSTO 外接程序 - 工作簿标签任务窗格")]
@@ -18,6 +17,3 @@ using System.Security;
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityTransparent]

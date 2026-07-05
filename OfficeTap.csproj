@@ -9,6 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OfficeTap</RootNamespace>
     <AssemblyName>OfficeTap</AssemblyName>
+    <OfficeApplication>Excel</OfficeApplication>
+    <SignManifests>true</SignManifests>
+    <ManifestCertificateThumbprint>699935BAC5547D29441C5A4E0C607F7984F8DBAA</ManifestCertificateThumbprint>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
