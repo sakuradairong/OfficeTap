@@ -77,18 +77,10 @@ namespace OfficeTap
             _taskPaneControl?.RefreshWorkbooks();
         }
 
-        #region VSTO 生成的代码
-
-        /// <summary>
-        /// 设计器支持所需的方法 - 不要使用代码编辑器修改
-        /// 此方法的内容。
-        /// </summary>
         private void InternalStartup()
         {
             Startup += ThisAddIn_Startup;
             Shutdown += ThisAddIn_Shutdown;
         }
-
-        #endregion
     }
 }
