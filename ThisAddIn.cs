@@ -35,6 +35,7 @@ namespace OfficeTap
 
         private void WireWorkbookEvents()
         {
+            Application.NewWorkbook += Application_NewWorkbook;
             Application.WorkbookNewSheet += Application_WorkbookNewSheet;
             Application.WorkbookOpen += Application_WorkbookOpen;
             Application.WorkbookBeforeClose += Application_WorkbookBeforeClose;
@@ -43,10 +44,16 @@ namespace OfficeTap
 
         private void UnwireWorkbookEvents()
         {
+            Application.NewWorkbook -= Application_NewWorkbook;
             Application.WorkbookNewSheet -= Application_WorkbookNewSheet;
             Application.WorkbookOpen -= Application_WorkbookOpen;
             Application.WorkbookBeforeClose -= Application_WorkbookBeforeClose;
             Application.WorkbookActivate -= Application_WorkbookActivate;
+        }
+
+        private void Application_NewWorkbook(Excel.Workbook workbook)
+        {
+            RefreshTabs();
         }
 
         private void Application_WorkbookNewSheet(Excel.Workbook workbook, object sheet)
@@ -61,9 +68,9 @@ namespace OfficeTap
 
         private void Application_WorkbookBeforeClose(Excel.Workbook workbook, ref bool cancel)
         {
-            if (!cancel)
+            if (!cancel && _taskPaneControl != null && !_taskPaneControl.IsDisposed && _taskPaneControl.IsHandleCreated)
             {
-                RefreshTabs();
+                _taskPaneControl.BeginInvoke(new System.Action(RefreshTabs));
             }
         }
 

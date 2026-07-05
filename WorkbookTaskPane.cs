@@ -13,6 +13,8 @@ namespace OfficeTap
         private readonly FlowLayoutPanel _tabContainer;
         private readonly Dictionary<Button, Excel.Workbook> _buttonToWorkbook = new Dictionary<Button, Excel.Workbook>();
         private readonly ToolTip _toolTip = new ToolTip();
+        private readonly Font _regularTabFont = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular);
+        private readonly Font _activeTabFont = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold);
 
         public WorkbookTaskPane(Excel.Application application)
         {
@@ -89,7 +91,6 @@ namespace OfficeTap
         private Button CreateTabButton(Excel.Workbook workbook)
         {
             var name = workbook.Name ?? "未命名";
-            var fullPath = workbook.FullName;
 
             var button = new Button
             {
@@ -101,7 +102,7 @@ namespace OfficeTap
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(2, 0, 2, 0),
                 Padding = new Padding(10, 0, 10, 0),
-                Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular),
+                Font = _regularTabFont,
                 BackColor = Color.White,
                 ForeColor = Color.FromArgb(32, 32, 32),
                 Cursor = Cursors.Hand,
@@ -114,7 +115,7 @@ namespace OfficeTap
             button.MouseLeave += (s, e) => HighlightActiveWorkbook();
             button.Click += (s, e) => ActivateWorkbook(workbook);
 
-            _toolTip.SetToolTip(button, string.IsNullOrEmpty(fullPath) ? name : fullPath);
+            _toolTip.SetToolTip(button, name);
 
             return button;
         }
@@ -155,12 +156,12 @@ namespace OfficeTap
             foreach (Button button in _tabContainer.Controls.OfType<Button>())
             {
                 var workbook = button.Tag as Excel.Workbook;
-                bool isActive = workbook != null && activeWorkbook != null && workbook.FullName == activeWorkbook.FullName;
+                bool isActive = workbook != null && activeWorkbook != null && ReferenceEquals(workbook, activeWorkbook);
 
                 button.BackColor = isActive ? Color.FromArgb(0, 120, 215) : Color.White;
                 button.ForeColor = isActive ? Color.White : Color.FromArgb(32, 32, 32);
                 button.FlatAppearance.BorderColor = isActive ? Color.FromArgb(0, 120, 215) : Color.FromArgb(210, 210, 210);
-                button.Font = new Font(button.Font, isActive ? FontStyle.Bold : FontStyle.Regular);
+                button.Font = isActive ? _activeTabFont : _regularTabFont;
             }
         }
     }
